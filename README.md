@@ -25,8 +25,8 @@ To build and run, after you pull the application, follow one of the following ap
 or
 
 2- build and run in two steps as following:	
-   $ mvn package
-   $ java -jar target/currency-coverter-0.0.1-SNAPSHOT.jar
+   - $ mvn package
+   - $ java -jar target/currency-coverter-0.0.1-SNAPSHOT.jar
 
 then from your favorite browser, navigate to: 
-   http://localhost:9090/ 
+   - http://localhost:9090/ 
