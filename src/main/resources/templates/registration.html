@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Currency Converter - Register New User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8"/>
+    <link href="/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+
+	<nav>
+       <ul>
+       	  <li>Currency Converter</li>
+       	  <li><a th:href="@{/main}">Main Page</a></li>
+          <li><a th:href="@{/login}">Login User</a></li>
+        </ul>
+    </nav> 
+    <div align="center" class="form-style-8">
+	<h2>User Registration</h2>
+    <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+    	
+    	<table>
+    	  <tr> <td>First Name: </td> <td> <input type="text" th:field="*{name}" /></td></tr>
+    	  <tr> <td>Last Name: </td> <td> <input type="text" th:field="*{lastName}" /></td></tr>
+	      <tr> <td>Email: </td> <td> <input type="text" th:field="*{email}" /></td></tr> 
+	      <tr> <td>Password: </td> <td> <input type="text" th:field="*{password}" /></td></tr> 
+        
+	      <tr> <td> </td><td><input type="submit"   value="Submit" /> </td></tr>	
+	   </table>
+    </form>
+    </div>
+</body>
+</html>
