@@ -1,10 +1,11 @@
 # currency-converter
 web based currency converter based on openexchangerates public api
-https://openexchangerates.org/signup/free
+https://openexchangerates.org
 
 # Technology stack
 - Spring Boot
 - Spring MVC
+- Thymeleaf
 - Spring Security
 - Spring Data JPA
 - Spring Test (MockMVC)
@@ -19,12 +20,14 @@ Application is based on spring boot which means it is autonomous and self contai
 
 To build and run, after you pull the application, follow one of the following approaches after you browse to the project path where the pom file located using CMD:
 
-1-  build and run using: mvn spring-boot:run
+1- build and run using spring boot as following: 
+	- $ mvn spring-boot:run
 
 or
 
-2- build using:	mvn package
-   then run using: java -jar target/currency-coverter-0.0.1-SNAPSHOT.jar
+2- build and run in two steps as following:
+	- $ mvn package
+	- $ java -jar target/currency-coverter-0.0.1-SNAPSHOT.jar
 
-then from your favorite browser, navigate to: 
-http://localhost:9090/ 
+then from your favorite browser, navigate to following url and test the application:
+	- http://localhost:9090/
