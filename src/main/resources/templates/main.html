@@ -22,6 +22,9 @@
 		<h2>Exchange Query</h2>
 		<form action="#" th:action="@{/main}" th:object="${exchange}"
 			method="post">
+			
+			<span th:utext="${errorMessage}"></span>
+			
 			<table>
 				<tr>
 					<td>From Currency:</td>

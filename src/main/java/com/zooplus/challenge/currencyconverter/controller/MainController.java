@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.zooplus.challenge.currencyconverter.entity.Exchange;
@@ -69,33 +70,47 @@ public class MainController {
 	@RequestMapping(value = "main", method = RequestMethod.POST)
 	public ModelAndView exchange(Exchange exchange) {
 		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
 		Exchange exchangeResult = null;
-		Date date = exchange.getDate();
-		if (date == null) {
-			// get latest exchange rate
-			LOGGER.info("Date not provided, get latest exchange");
-			exchangeResult = currencyConverterService.getConversionRate(exchange.getFrom(), exchange.getTo());
-		} else {
-			// get historical exchange rate
-			LOGGER.info("Date provided, get historical exchange in specific date: {}", date);
-			exchangeResult = currencyConverterService.getConversionRate(exchange.getFrom(), exchange.getTo(),
-					date);
+		Set<Exchange> userExchanges = null;
+
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+
+			Date date = exchange.getDate();
+			if (date == null) {
+				// get latest exchange rate
+				LOGGER.info("Date not provided, get latest exchange");
+				exchangeResult = currencyConverterService.getConversionRate(exchange.getFrom(), exchange.getTo());
+			} else {
+				// get historical exchange rate
+				LOGGER.info("Date provided, get historical exchange in specific date: {}", date);
+				exchangeResult = currencyConverterService.getConversionRate(exchange.getFrom(), exchange.getTo(), date);
+			}
+			exchangeResult.setUser(user);
+
+			LOGGER.info("Exchange retrieved, save exchange to history: {}", exchangeResult.toString());
+			historyService.saveExchange(exchangeResult);
+
+			// prepare model for queried exchange
+			exchange.setRate(exchangeResult.getRate());
+			exchange.setDate(exchangeResult.getDate());
+			
+			// prepare model for user exchange history
+			userExchanges = historyService.getUserExchangeHistory(user);
+
+		} catch (final HttpClientErrorException e) {
+			LOGGER.error("Response error: {}", e.getResponseBodyAsString());
+			// pass descriptive error message to the view
+			modelAndView.addObject("errorMessage", "Currency coverter service returned error response: " + e.getMessage());
 		}
-		exchangeResult.setUser(user);
+		catch (final Exception e) {
+			LOGGER.error("Error while retrieving currency exchange", e);
+			// pass descriptive error message to the view
+			modelAndView.addObject("errorMessage", "Currency coverter error: " + e.getMessage());
+		}
 
-		LOGGER.info("Exchange retrieved, save exchange to history: {}", exchangeResult.toString());
-		historyService.saveExchange(exchangeResult);
-
-		// prepare model for queried exchange
-		exchange.setRate(exchangeResult.getRate());
-		exchange.setDate(exchangeResult.getDate());
 		modelAndView.addObject("exchange", exchange);
-
-		// prepare model for user exchange history
-		Set<Exchange> userExchanges = historyService.getUserExchangeHistory(user);
 		modelAndView.addObject("userExchanges", userExchanges);
 		modelAndView.setViewName("main");
 
