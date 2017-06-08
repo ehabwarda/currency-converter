@@ -57,7 +57,7 @@ public class User {
 	private Date dateOfBirth;
 	@Column(name = "active")
 	private int active;
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
