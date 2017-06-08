@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import com.zooplus.challenge.currencyconverter.service.UserService;
 
 @Controller
 public class LoginController {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -64,10 +68,13 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView registerNewUser(@Valid User user, BindingResult bindingResult) {
+		String email = user.getEmail();
+		LOGGER.info("Register new user: {}", user.toString());
 		ModelAndView modelAndView = new ModelAndView();
 		// retrieved logged in user from repository.
-		User existingUser = userService.findUserByEmail(user.getEmail());
+		User existingUser = userService.findUserByEmail(email);
 		if (existingUser != null) {
+			LOGGER.warn("There is already a user registered with this email: {}", email);
 			bindingResult
 					.rejectValue("email", "error.user",
 							"There is already a user registered with the email provided");
@@ -76,6 +83,7 @@ public class LoginController {
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveUser(user);
+			LOGGER.info("User registered successfully with email: {}", email);
 			modelAndView.addObject("successMessage", "User has been registered successfully, please login");
 			// clear password
 			user.setPassword("");
