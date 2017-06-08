@@ -7,5 +7,12 @@ import com.zooplus.challenge.currencyconverter.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	 User findByEmail(String email);
+	
+	 /**
+	  * find user by email.
+	  * 
+	 * @param email
+	 * @return matched user.
+	 */
+	User findByEmail(String email);
 }
