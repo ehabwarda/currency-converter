@@ -1,8 +1,11 @@
 package com.zooplus.challenge.currencyconverter.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,12 @@ public class LoginController {
 	
 	@Autowired
 	private UserService userService;
+	
+	/**
+	 * list of supported countries.
+	 */
+	@Value("#{'${config.registeration.countries}'.split(',')}")
+	private List<String> countries;	
 
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public String login(Model model){
@@ -30,6 +39,7 @@ public class LoginController {
 	public String registration(Model model){
 		User user = new User();
 		model.addAttribute("user", user);
+		model.addAttribute("countries", countries);
 		return "registration";
 	}
 	
