@@ -1,42 +1,75 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Currency Converter - Main Page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta charset="utf-8"/>
-    <link href="/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" media="screen"/>
+<title>Currency Converter - Main Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<link href="/css/main.css" th:href="@{/css/main.css}" rel="stylesheet"
+	media="screen" />
+
 </head>
 <body>
 	<nav>
-       <ul>
-          <li>Currency Converter</li>
-          <li><a th:href="@{/login}">Login User</a></li>
-          <li><a th:href="@{/registration}">Register New User</a></li>
-          <li><a th:href="@{/logout}">Logout</a></li>
-        </ul>
-    </nav> 
-    <div align="center" class="form-style-8">
-	<h2>History</h2>
-		
-	
-	<table>
-	<thead>
-        <tr>
-            <th></th>
-            <th></th>
+		<ul>
+			<li>Currency Converter</li>
+			<li><a th:href="@{/login}">Login User</a></li>
+			<li><a th:href="@{/registration}">Register New User</a></li>
+			<li><a th:href="@{/logout}">Logout</a></li>
+		</ul>
+	</nav>
 
-        </tr>
-    </thead>
-	
-	 <tbody>
-		<tr>
-<td/>
-<td/>
-		  	
-		</tr>
-		 </tbody>
-	</table>
-    
-    </div>
+	<div align="center" class="form-style-8">
+		<h2>Exchange Query</h2>
+		<form action="#" th:action="@{/main}" th:object="${exchange}"
+			method="post">
+			<table>
+				<tr>
+					<td>From Currency:</td>
+					<td><input type="text" th:field="*{from}" /></td>
+				</tr>
+				<tr>
+					<td>To Currency:</td>
+					<td><input type="text" th:field="*{to}" /></td>
+				</tr>
+				<tr>
+					<td>Date:</td>
+					<td><input type="date" th:field="*{date}" /></td>
+				</tr>
+				<tr>
+					<td>Exchange Rate:</td>
+					<td><input type="text" th:field="*{rate}" /></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Submit" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+	<div align="center" class="form-style-8">
+		<h2>Exchange History</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>From Currency</th>
+					<th>To Currency</th>
+					<th>Exchange Rate</th>
+					<th>Date</th>
+
+				</tr>
+			</thead>
+
+			<tr th:each="userExchange : ${userExchanges}">
+				<td th:text="${userExchange.from}" />
+				<td th:text="${userExchange.to}" />
+				<td th:text="${userExchange.rate}" />
+				<td th:text="${userExchange.date}" />
+			</tr>
+		</table>
+
+	</div>
 </body>
 </html>
