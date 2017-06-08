@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
@@ -46,6 +47,8 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Exchange> exchanges;
 
 	public int getId() {
 		return id;
@@ -101,6 +104,14 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Set<Exchange> getExchanges() {
+		return exchanges;
+	}
+
+	public void setExchanges(Set<Exchange> exchanges) {
+		this.exchanges = exchanges;
 	}
 
 }
