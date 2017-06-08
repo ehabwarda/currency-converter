@@ -28,6 +28,12 @@ public class LoginController {
 	@Value("#{'${config.registeration.countries}'.split(',')}")
 	private List<String> countries;	
 
+	/**
+	 * get login page.
+	 * 
+	 * @param model
+	 * @return view
+	 */
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public String login(Model model){
 		User user = new User();
@@ -35,6 +41,12 @@ public class LoginController {
 		return "login";
 	}	
 	
+	/**
+	 * get registration page.
+	 * 
+	 * @param model
+	 * @return view
+	 */
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public String registration(Model model){
 		User user = new User();
@@ -43,9 +55,17 @@ public class LoginController {
 		return "registration";
 	}
 	
+	/**
+	 * register new user.
+	 * 
+	 * @param user
+	 * @param bindingResult
+	 * @return view
+	 */
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView registerNewUser(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
+		// retrieved logged in user from repository.
 		User existingUser = userService.findUserByEmail(user.getEmail());
 		if (existingUser != null) {
 			bindingResult
@@ -57,6 +77,7 @@ public class LoginController {
 		} else {
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully, please login");
+			// clear password
 			user.setPassword("");
 			modelAndView.addObject("user", user);
 			modelAndView.setViewName("login");
