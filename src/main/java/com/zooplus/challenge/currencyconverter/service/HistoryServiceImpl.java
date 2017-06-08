@@ -15,11 +15,17 @@ public class HistoryServiceImpl implements HistoryService {
 	@Autowired
 	private ExchangeRepository exchangeRepository;
 
+	/* (non-Javadoc)
+	 * @see com.zooplus.challenge.currencyconverter.service.HistoryService#saveExchange(com.zooplus.challenge.currencyconverter.entity.Exchange)
+	 */
 	public void saveExchange(Exchange exchange) {
 		exchangeRepository.save(exchange);
 	}
 
-	public Set<Exchange> getUserExchangHistory(User user) {
+	/* (non-Javadoc)
+	 * @see com.zooplus.challenge.currencyconverter.service.HistoryService#getUserExchangeHistory(com.zooplus.challenge.currencyconverter.entity.User)
+	 */
+	public Set<Exchange> getUserExchangeHistory(User user) {
 		return exchangeRepository.findByUser(user);
 	}
 

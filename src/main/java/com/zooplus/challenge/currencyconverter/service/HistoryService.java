@@ -7,7 +7,18 @@ import com.zooplus.challenge.currencyconverter.entity.User;
 
 public interface HistoryService {
 
+	/** 
+	 * save an exchange to repository.
+	 * 
+	 * @param exchange
+	 */
 	public void saveExchange(Exchange exchange);
 
-	public Set<Exchange> getUserExchangHistory(User user);
+	/**
+	 * get user exchange history.
+	 * 
+	 * @param user
+	 * @return set of user exchanges
+	 */
+	public Set<Exchange> getUserExchangeHistory(User user);
 }
