@@ -1,26 +1,28 @@
 package com.zooplus.challenge.currencyconverter.service;
 
-import com.zooplus.challenge.currencyconverter.model.ExchangeRates;
+import java.util.Date;
+
+import com.zooplus.challenge.currencyconverter.entity.Exchange;
 
 public interface CurrencyConverterService {
 	
 	/**
-	 * get latest conversion rates.
+	 * get latest exchange rate.
 	 * 
 	 * @param fromCurrency
 	 * @param toCurrency
-	 * @return exchange rates
+	 * @return exchange rate
 	 */
-	public ExchangeRates getConversionRate(String fromCurrency, String toCurrency);
+	public Exchange getConversionRate(String fromCurrency, String toCurrency);
 	
 	/**
-	 * get conversion rates in specific date (historical)
+	 * get exchange rate in specific date (historical).
 	 * 
 	 * @param fromCurrency
 	 * @param toCurrency
 	 * @param date
-	 * @return exhange rates
+	 * @return exchange rate
 	 */
-	public ExchangeRates getConversionRate(String fromCurrency, String toCurrency, String date);
+	public Exchange getConversionRate(String fromCurrency, String toCurrency, Date date);
 
 }
