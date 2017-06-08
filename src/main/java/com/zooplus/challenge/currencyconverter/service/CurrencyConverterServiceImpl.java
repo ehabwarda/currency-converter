@@ -7,6 +7,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -52,7 +53,9 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 	 * @see com.zooplus.challenge.currencyconverter.service.CurrencyConverterService#getConversionRate(java.lang.String, java.lang.String, java.util.Date)
 	 */
 	@Override
+	@Cacheable("historical-exchanges")
 	public Exchange getConversionRate(String fromCurrency, String toCurrency, Date date) {	
+		/* will enter here and query external service only if not found in cache.*/
 		LOGGER.info("Get historical exchange rates, from: {} to: {} in date: {}", fromCurrency, toCurrency, date);
 		ExchangeRates exchangeRates = null;
 		// call real external currency converter service to get historical exchange rates
