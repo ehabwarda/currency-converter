@@ -1,0 +1,4 @@
+<ehcache>
+	<cache name="historical-exchanges" maxElementsInMemory="100" timeToIdleSeconds="360"
+		timeToLiveSeconds="600" />
+</ehcache>
