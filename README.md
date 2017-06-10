@@ -44,10 +44,17 @@ or
 then from your favorite browser, navigate to following url and test the application:
 - http://localhost:9090/
 
+Application is configured with Travis CI for automated build and test and here is the link: 
+https://travis-ci.org/ehabwarda/currency-converter
+
 # Notes
 - it depends on the openexchangerates account to allow all operations or not. here, as we use a free account, only from currency supported is USD. the openexchangerates app_id is configurable and if updated to paid account, all operations will be available.
 - it is one main page for both latest and historical queries, if date not provided it will be considered as a request for latest exchange.
-- for testing, I created a user while startup >> email: test@gmail.com	password: password
+- for testing, I created a user while startup >> email: ehab.ward@gmail.com	password: password
 
 # Restrictions
 - always use USD as from currency because of limitations on openexchangerates free account. because of that, I made USD is the only available currency in from currency list.
+
+# Heroku
+- application is available via internet on Heroku: https://ehab-currency-converter.herokuapp.com/main
+- there is a user already created for test: ehab.ward@gmail.com/password
