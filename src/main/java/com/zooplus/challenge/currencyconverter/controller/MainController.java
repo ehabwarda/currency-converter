@@ -76,6 +76,9 @@ public class MainController {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findUserByEmail(auth.getName());
+			
+			// prepare model for user exchange history
+			userExchanges = historyService.getUserLatestExchangeHistory(user);
 
 			Date date = exchange.getDate();
 			if (date == null) {
@@ -95,10 +98,7 @@ public class MainController {
 
 			// prepare model for queried exchange
 			exchange.setRate(exchangeResult.getRate());
-			exchange.setDate(exchangeResult.getDate());
-			
-			// prepare model for user exchange history
-			userExchanges = historyService.getUserLatestExchangeHistory(user);
+			exchange.setDate(exchangeResult.getDate());			
 
 		} catch (final HttpClientErrorException e) {
 			LOGGER.error("Response error: {}", e.getResponseBodyAsString());
