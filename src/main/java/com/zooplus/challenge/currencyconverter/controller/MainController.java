@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,12 @@ public class MainController {
 
 	@Autowired
 	HistoryService historyService;
+	
+	/**
+	 * list of supported currencies.
+	 */
+	@Value("#{'${config.supported.currencies}'.split(',')}")
+	private List<String> currencies;
 
 	/**
 	 * get user exchange history.
@@ -47,6 +54,9 @@ public class MainController {
 		String email = auth.getName();
 		User user = userService.findUserByEmail(email);
 		LOGGER.info("User record exists in repository: {}", email);
+		
+		// list of supported currencies
+		modelAndView.addObject("currencies", currencies);
 
 		Exchange exchange = new Exchange();
 		// will be empty in first call.
@@ -111,6 +121,8 @@ public class MainController {
 			modelAndView.addObject("errorMessage", "Currency coverter error: " + e.getMessage());
 		}
 
+		// list of supported currencies
+		modelAndView.addObject("currencies", currencies);
 		modelAndView.addObject("exchange", exchange);
 		modelAndView.addObject("userExchanges", userExchanges);
 		modelAndView.setViewName("main");

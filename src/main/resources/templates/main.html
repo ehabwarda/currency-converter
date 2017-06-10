@@ -28,11 +28,15 @@
 			<table>
 				<tr>
 					<td>From Currency:</td>
-					<td><input type="text" th:field="*{from}" /></td>
+					<td> <select th:field="*{from}">
+	    	          <option th:each="from : ${currencies}" th:value="${from}" th:text="${from}">USD</option>
+	    	       </select></td>
 				</tr>
 				<tr>
 					<td>To Currency:</td>
-					<td><input type="text" th:field="*{to}" /></td>
+					<td> <select th:field="*{to}">
+	    	          <option th:each="to : ${currencies}" th:value="${to}" th:text="${to}">EUR</option>
+	    	       </select></td>
 				</tr>
 				<tr>
 					<td>Date:</td>

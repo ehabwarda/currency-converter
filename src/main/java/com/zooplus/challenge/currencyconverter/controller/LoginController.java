@@ -29,7 +29,7 @@ public class LoginController {
 	/**
 	 * list of supported countries.
 	 */
-	@Value("#{'${config.registeration.countries}'.split(',')}")
+	@Value("#{'${config.supported.countries}'.split(',')}")
 	private List<String> countries;	
 
 	/**
