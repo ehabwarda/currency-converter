@@ -31,6 +31,8 @@ public class Exchange {
 	private Date date;
 	@Column(name = "rate")
 	private double rate;
+	@Column(name = "query_date")
+	private Date queryDate;
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -73,6 +75,14 @@ public class Exchange {
 
 	public void setRate(double rate) {
 		this.rate = rate;
+	}
+
+	public Date getQueryDate() {
+		return queryDate;
+	}
+
+	public void setQueryDate(Date queryDate) {
+		this.queryDate = queryDate;
 	}
 
 	public User getUser() {

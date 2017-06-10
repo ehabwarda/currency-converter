@@ -86,6 +86,8 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 		exchange.setDate(date);
 		exchange.setTo(toCurrency);
 		exchange.setRate(exchangeRates.getRates().get(toCurrency));
+		// query date to keep order of historical queries
+		exchange.setQueryDate(new Date(System.currentTimeMillis()));
 		return exchange;
 		
 	}

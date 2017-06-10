@@ -60,7 +60,8 @@
 					<th>From Currency</th>
 					<th>To Currency</th>
 					<th>Exchange Rate</th>
-					<th>Date</th>
+					<th>Exchange Date</th>
+					<th>Query Date</th>
 
 				</tr>
 			</thead>
@@ -70,6 +71,7 @@
 				<td th:text="${userExchange.to}" />
 				<td th:text="${userExchange.rate}" />
 				<td th:text="${userExchange.date}" />
+				<td th:text="${userExchange.queryDate}" />
 			</tr>
 		</table>
 

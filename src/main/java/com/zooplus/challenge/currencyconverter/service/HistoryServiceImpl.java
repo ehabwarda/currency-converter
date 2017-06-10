@@ -1,5 +1,6 @@
 package com.zooplus.challenge.currencyconverter.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class HistoryServiceImpl implements HistoryService {
 	 */
 	public Set<Exchange> getUserExchangeHistory(User user) {
 		return exchangeRepository.findByUser(user);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zooplus.challenge.currencyconverter.service.HistoryService#getUserLatestExchangeHistory(com.zooplus.challenge.currencyconverter.entity.User)
+	 */
+	@Override
+	public List<Exchange> getUserLatestExchangeHistory(User user) {
+		return exchangeRepository.findFirst10ByUserOrderByQueryDateDesc(user);
 	}
 
 }

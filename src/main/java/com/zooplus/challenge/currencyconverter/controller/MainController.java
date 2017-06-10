@@ -1,7 +1,7 @@
 package com.zooplus.challenge.currencyconverter.controller;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class MainController {
 		modelAndView.addObject("exchange", exchange);
 
 		// retrieve user exchange history
-		Set<Exchange> userExchanges = historyService.getUserExchangeHistory(user);
+		List<Exchange> userExchanges = historyService.getUserLatestExchangeHistory(user);
 		modelAndView.addObject("userExchanges", userExchanges);
 		modelAndView.setViewName("main");
 
@@ -71,7 +71,7 @@ public class MainController {
 	public ModelAndView exchange(Exchange exchange) {
 		ModelAndView modelAndView = new ModelAndView();
 		Exchange exchangeResult = null;
-		Set<Exchange> userExchanges = null;
+		List<Exchange> userExchanges = null;
 
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -97,7 +97,7 @@ public class MainController {
 			exchange.setDate(exchangeResult.getDate());
 			
 			// prepare model for user exchange history
-			userExchanges = historyService.getUserExchangeHistory(user);
+			userExchanges = historyService.getUserLatestExchangeHistory(user);
 
 		} catch (final HttpClientErrorException e) {
 			LOGGER.error("Response error: {}", e.getResponseBodyAsString());

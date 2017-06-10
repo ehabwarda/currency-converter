@@ -1,6 +1,7 @@
 package com.zooplus.challenge.currencyconverter.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -61,7 +62,7 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Exchange> exchanges;
+	private List<Exchange> exchanges;
 
 	public int getId() {
 		return id;
@@ -151,11 +152,11 @@ public class User {
 		this.roles = roles;
 	}
 
-	public Set<Exchange> getExchanges() {
+	public List<Exchange> getExchanges() {
 		return exchanges;
 	}
 
-	public void setExchanges(Set<Exchange> exchanges) {
+	public void setExchanges(List<Exchange> exchanges) {
 		this.exchanges = exchanges;
 	}
 	
