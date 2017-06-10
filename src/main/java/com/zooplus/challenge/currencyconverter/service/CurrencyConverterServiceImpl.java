@@ -34,7 +34,7 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(CurrencyConverterServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyConverterServiceImpl.class);
 	
 	/**
 	 *  Rest client.
@@ -49,22 +49,15 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 	@Autowired
 	Environment env; 
 
-	/**
-	 * list of supported currencies.
-	 */
-	//@Value("#{'${config.supported.currencies}'.split(',')}")
-	//private List<String> currencies;
-	
 	/* (non-Javadoc)
 	 * @see com.zooplus.challenge.currencyconverter.service.CurrencyConverterService#getConversionRate(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Exchange getConversionRate(String fromCurrency, String toCurrency) {
 		LOGGER.info("Get latest exchange rates, from: {} to: {}", fromCurrency, toCurrency);
-		ExchangeRates exchangeRates = null;
 		// call real external currency converter service to get latest exchange rates
 		String url = String.format(env.getProperty(OPENEXCHANGERATES_ENDPOINT_LATEST), env.getProperty(OPENEXCHANGERATES_APP_ID), fromCurrency, toCurrency);
-		exchangeRates = restTemplate.getForObject(url, ExchangeRates.class);		
+		ExchangeRates exchangeRates = restTemplate.getForObject(url, ExchangeRates.class);		
 		LOGGER.info("Response: {}", exchangeRates.toString());	
 		return getExchange(exchangeRates, fromCurrency, toCurrency, new Date(1000 * exchangeRates.getTimestamp()));
 	}
@@ -77,10 +70,9 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 	public Exchange getConversionRate(String fromCurrency, String toCurrency, Date date) {	
 		/* will enter here and query external service only if not found in cache.*/
 		LOGGER.info("Get historical exchange rates, from: {} to: {} in date: {}", fromCurrency, toCurrency, date);
-		ExchangeRates exchangeRates = null;
 		// call real external currency converter service to get historical exchange rates
 		String url = String.format(env.getProperty(OPENEXCHANGERATES_ENDPOINT_HISTORICAL), getFormattedDate(date), env.getProperty(OPENEXCHANGERATES_APP_ID), fromCurrency, toCurrency);
-		exchangeRates = restTemplate.getForObject(url, ExchangeRates.class);
+		ExchangeRates exchangeRates = restTemplate.getForObject(url, ExchangeRates.class);
 		LOGGER.info("Response from external service: {}", exchangeRates.toString());
 		return getExchange(exchangeRates, fromCurrency, toCurrency, date);
 	}

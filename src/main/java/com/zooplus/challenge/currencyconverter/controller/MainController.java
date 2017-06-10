@@ -23,7 +23,7 @@ import com.zooplus.challenge.currencyconverter.service.UserService;
 @Controller
 public class MainController {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
 	@Autowired
 	private CurrencyConverterService currencyConverterService;
@@ -33,12 +33,6 @@ public class MainController {
 
 	@Autowired
 	HistoryService historyService;
-	
-	/**
-	 * list of supported currencies.
-	 */
-//	@Value("#{'${config.supported.currencies}'.split(',')}")
-//	private List<String> currencies;
 
 	/**
 	 * get user exchange history.
@@ -110,6 +104,7 @@ public class MainController {
 			exchange.setDate(exchangeResult.getDate());			
 
 		} catch (final HttpClientErrorException e) {
+			LOGGER.error("Error while contacting the currency converter service", e);
 			LOGGER.error("Response error: {}", e.getResponseBodyAsString());
 			// pass descriptive error message to the view
 			modelAndView.addObject("errorMessage", "Currency coverter service returned error response: " + e.getMessage());

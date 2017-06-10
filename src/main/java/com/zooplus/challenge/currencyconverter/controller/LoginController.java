@@ -21,7 +21,7 @@ import com.zooplus.challenge.currencyconverter.service.UserService;
 @Controller
 public class LoginController {
 	
-	private final static Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	private UserService userService;

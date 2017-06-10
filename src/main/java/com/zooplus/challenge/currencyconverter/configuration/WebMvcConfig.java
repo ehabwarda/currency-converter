@@ -12,8 +12,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
@@ -23,8 +22,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-      registry.addViewController("/home").setViewName("home");
-      registry.addViewController("/").setViewName("home");
+      registry.addViewController("/main").setViewName("main");
+      registry.addViewController("/").setViewName("main");
       registry.addViewController("/registration").setViewName("registration");
       registry.addViewController("/login").setViewName("login");
   }

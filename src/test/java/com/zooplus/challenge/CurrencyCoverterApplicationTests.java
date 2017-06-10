@@ -9,6 +9,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class CurrencyCoverterApplicationTests {
 
+	/**
+	 * just to make sure context is ok.
+	 */
 	@Test
 	public void contextLoads() {
 	}
