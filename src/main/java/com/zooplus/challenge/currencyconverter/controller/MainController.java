@@ -38,8 +38,8 @@ public class MainController {
 	/**
 	 * list of supported currencies.
 	 */
-	@Value("#{'${config.supported.currencies}'.split(',')}")
-	private List<String> currencies;
+//	@Value("#{'${config.supported.currencies}'.split(',')}")
+//	private List<String> currencies;
 
 	/**
 	 * get user exchange history.
@@ -56,7 +56,7 @@ public class MainController {
 		LOGGER.info("User record exists in repository: {}", email);
 		
 		// list of supported currencies
-		modelAndView.addObject("currencies", currencies);
+		modelAndView.addObject("currencies", currencyConverterService.getSupportedCurrencies());
 
 		Exchange exchange = new Exchange();
 		// will be empty in first call.
@@ -103,7 +103,7 @@ public class MainController {
 			exchangeResult.setId(0);
 			exchangeResult.setUser(user);
 
-			LOGGER.info("Exchange retrieved, save exchange to history: {}", exchangeResult.toString());
+			LOGGER.info("Exchange retrieved, save exchange to history");
 			historyService.saveExchange(exchangeResult);
 
 			// prepare model for queried exchange
@@ -122,7 +122,7 @@ public class MainController {
 		}
 
 		// list of supported currencies
-		modelAndView.addObject("currencies", currencies);
+		modelAndView.addObject("currencies", currencyConverterService.getSupportedCurrencies());
 		modelAndView.addObject("exchange", exchange);
 		modelAndView.addObject("userExchanges", userExchanges);
 		modelAndView.setViewName("main");

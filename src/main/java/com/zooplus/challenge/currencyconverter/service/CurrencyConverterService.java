@@ -1,6 +1,7 @@
 package com.zooplus.challenge.currencyconverter.service;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.zooplus.challenge.currencyconverter.entity.Exchange;
 
@@ -24,5 +25,19 @@ public interface CurrencyConverterService {
 	 * @return exchange rate
 	 */
 	public Exchange getConversionRate(String fromCurrency, String toCurrency, Date date);
+	
+	/**
+	 * get set of supported currencies.
+	 * 
+	 * @return set of supported currencies.
+	 */
+	public Set<String> getSupportedCurrencies();
+
+	/**
+	 * get set of configured currencies.
+	 * 
+	 * @return set of configured currencies.
+	 */
+	public Set<String> getConfiguredCurrencies();
 
 }

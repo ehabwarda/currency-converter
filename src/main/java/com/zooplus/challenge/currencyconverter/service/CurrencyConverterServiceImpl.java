@@ -3,26 +3,34 @@ package com.zooplus.challenge.currencyconverter.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.zooplus.challenge.currencyconverter.entity.Exchange;
 import com.zooplus.challenge.currencyconverter.model.ExchangeRates;
 
-@Component
+@Service
 public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 	
+	private static final String CONFIG_SUPPORTED_CURRENCIES = "config.supported.currencies";
+
 	private static final String OPENEXCHANGERATES_ENDPOINT_LATEST = "openexchangerates.endpoint.latest";
 
 	private static final String OPENEXCHANGERATES_APP_ID = "openexchangerates.app-id";
 
 	private static final String OPENEXCHANGERATES_ENDPOINT_HISTORICAL = "openexchangerates.endpoint.historical";
+	
+	private static final String OPENEXCHANGERATES_ENDPOINT_CURRECIES = "openexchangerates.endpoint.currencies";
 
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 
@@ -40,6 +48,12 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 	 */
 	@Autowired
 	Environment env; 
+
+	/**
+	 * list of supported currencies.
+	 */
+	//@Value("#{'${config.supported.currencies}'.split(',')}")
+	//private List<String> currencies;
 	
 	/* (non-Javadoc)
 	 * @see com.zooplus.challenge.currencyconverter.service.CurrencyConverterService#getConversionRate(java.lang.String, java.lang.String)
@@ -69,6 +83,40 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 		exchangeRates = restTemplate.getForObject(url, ExchangeRates.class);
 		LOGGER.info("Response from external service: {}", exchangeRates.toString());
 		return getExchange(exchangeRates, fromCurrency, toCurrency, date);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.zooplus.challenge.currencyconverter.service.CurrencyConverterService#getSupportedCurrencies()
+	 */
+	/*
+	 * it will try to get live supported currencies from external service but if
+	 * failed, fault tolerance is applied here using hystrix to get default
+	 * currencies from configuration.
+	 * 
+	 * result will be cached also with configured TTL and TTI.
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	@HystrixCommand(fallbackMethod = "getConfiguredCurrencies", commandProperties = {
+			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500") })
+	@Cacheable("currencies")
+	public Set<String> getSupportedCurrencies() {
+		LOGGER.info("Get set of supported currencies from external service");
+		// call real external service to get supported currencies
+		Map<String, String> surrenciesMap = restTemplate.getForObject(env.getProperty(OPENEXCHANGERATES_ENDPOINT_CURRECIES), Map.class);
+		Set<String> currencies = surrenciesMap.keySet();
+		LOGGER.info("Currencies: {}", currencies);	
+		return currencies;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Set<String> getConfiguredCurrencies() {
+		LOGGER.info("Get set of supported currencies from configuration");
+		Set<String> currencies = env.getProperty(CONFIG_SUPPORTED_CURRENCIES, Set.class);
+		LOGGER.info("Configured currencies: {}", currencies);
+		return currencies;
 	}
 	
 	/**
