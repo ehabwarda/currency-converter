@@ -87,6 +87,7 @@ public class MainController {
 				LOGGER.info("Date provided, get historical exchange in specific date: {}", date);
 				exchangeResult = currencyConverterService.getConversionRate(exchange.getFrom(), exchange.getTo(), date);
 			}
+			exchangeResult.setId(0);
 			exchangeResult.setUser(user);
 
 			LOGGER.info("Exchange retrieved, save exchange to history: {}", exchangeResult.toString());
