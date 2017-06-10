@@ -38,9 +38,10 @@ public class UserServiceImpl implements UserService{
 		// encrypt user password
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        // for simplicity all users are admins.
+        // for simplicity all users are admins and actuators.
         Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        Role acuatorRole = roleRepository.findByRole("ACTUATOR");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole, acuatorRole)));
 		userRepository.save(user);
 	}
 
