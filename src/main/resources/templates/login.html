@@ -19,15 +19,16 @@
 	<h2>User Login</h2>
     <form action="#" th:action="@{/login}" th:object="${user}" method="post">
     	<span th:utext="${successMessage}"></span>
+    	<div align="center"  th:if="${param.error}">
+				<p style="font-size: 14; color: #FF1C19;">invalid email or password, please verify</p>
+		</div>
     	<table>
 	      <tr> <td>Email: </td> <td> <input type="text" th:field="*{email}" /></td></tr> 
-	      <tr> <td>Password: </td> <td> <input type="password" th:field="*{password}" /></td></tr> <br /> 
+	      <tr> <td>Password: </td> <td> <input type="password" th:field="*{password}" /></td></tr>
 				
-			<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">invalid email or password, please verify</p>
-			</div>
+			
         
-	      <tr> <td> </td><td><input type="submit"   value="Submit" /> </td></tr>	
+	      <tr> <td> </td><td><input type="submit"   value="Login" /> </td></tr>	
 	   </table>
     </form>
     </div>

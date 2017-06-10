@@ -23,12 +23,12 @@
 
 			<table>
 				<tr>
-					<td>First Name:</td>
-					<td><input type="text" th:field="*{name}" /></td>
+					<td>First Name: *</td>
+					<td><label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label><input type="text" th:field="*{name}" /></td>
 				</tr>
 				<tr>
-					<td>Last Name:</td>
-					<td><input type="text" th:field="*{lastName}" /></td>
+					<td>Last Name: *</td>
+					<td><label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></label><input type="text" th:field="*{lastName}" /></td>
 				</tr>
 				<tr>
 					<td>Country:</td>
@@ -45,16 +45,20 @@
 					<td><input type="text" th:field="*{zipCode}" /></td>
 				</tr>
 				<tr>
+					<td>Street:</td>
+					<td><input type="text" th:field="*{street}" /></td>
+				</tr>
+				<tr>
 					<td>Date Of Birth:</td>
-					<td><input type="date" th:field="*{dateOfBirth}" /></td>
+					<td><label th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></label><input type="date" th:field="*{dateOfBirth}" /></td>
 				</tr>
 				<tr>
-					<td>Email:</td>
-					<td><input type="text" th:field="*{email}" /></td>
+					<td>Email: *</td>
+					<td><label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label><input type="text" th:field="*{email}" /></td>
 				</tr>
 				<tr>
-					<td>Password:</td>
-					<td><input type="password" th:field="*{password}" /></td>
+					<td>Password: *</td>
+					<td><label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label><input type="password" th:field="*{password}" /></td>
 				</tr>
 
 				<tr>

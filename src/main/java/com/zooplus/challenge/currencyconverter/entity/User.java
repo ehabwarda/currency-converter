@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -33,19 +34,19 @@ public class User {
 	@Column(name = "user_id")
 	private int id;
 	@Column(name = "email")
-	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide an email")
+	@Email(message = "{validation.email.valid}")
+	@NotEmpty(message = "{validation.email.notEmpty}")
 	private String email;
 	@Column(name = "password")
-	@Length(min = 5, message = "*Your password must have at least 5 characters")
-	@NotEmpty(message = "*Please provide your password")
+	@Length(min = 5, message = "{validation.password.length}")
+	@NotEmpty(message = "{validation.password.notEmpty}")
 	@Transient
 	private String password;
 	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
+	@NotEmpty(message = "{validation.name.notEmpty}")
 	private String name;
 	@Column(name = "last_name")
-	@NotEmpty(message = "*Please provide your last name")
+	@NotEmpty(message = "{validation.lastName.notEmpty}")
 	private String lastName;
 	@Column(name = "country")
 	private String country;
@@ -53,8 +54,11 @@ public class User {
 	private String city;
 	@Column(name = "zip_code")
 	private String zipCode;
+	@Column(name = "street")
+	private String street;
 	@Column(name = "date_of_birth")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past(message = "{validation.dateOfBirth.reasonable}")
 	private Date dateOfBirth;
 	@Column(name = "active")
 	private int active;
@@ -126,6 +130,14 @@ public class User {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
 	public Date getDateOfBirth() {

@@ -83,6 +83,11 @@ nav > ul > li > a {
     resize:none;
     overflow: hidden;
 }
+.form-style-8 label{
+    color: red;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+}
 .form-style-8 input[type="button"], 
 .form-style-8 input[type="submit"]{
     -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;

@@ -77,17 +77,16 @@ public class LoginController {
 			LOGGER.warn("There is already a user registered with this email: {}", email);
 			bindingResult
 					.rejectValue("email", "error.user",
-							"There is already a user registered with the email provided");
+							"There is already a user registered with this email");
 		}
+		modelAndView.addObject("user", user);
 		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("countries", countries);
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveUser(user);
 			LOGGER.info("User registered successfully with email: {}", email);
 			modelAndView.addObject("successMessage", "User has been registered successfully, please login");
-			// clear password
-			user.setPassword("");
-			modelAndView.addObject("user", user);
 			modelAndView.setViewName("login");
 			
 		}
