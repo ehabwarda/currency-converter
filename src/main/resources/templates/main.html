@@ -29,7 +29,8 @@
 				<tr>
 					<td>From Currency:</td>
 					<td> <select th:field="*{from}">
-	    	          <option th:each="from : ${currencies}" th:value="${from}" th:text="${from}">USD</option>
+<!-- 	    	        <option th:each="from : ${currencies}" th:value="${from}" th:text="${from}">USD</option> -->
+						<option th:value="USD" th:text="USD">USD</option>
 	    	       </select></td>
 				</tr>
 				<tr>
