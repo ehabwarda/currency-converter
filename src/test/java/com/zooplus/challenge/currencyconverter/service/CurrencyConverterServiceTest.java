@@ -2,6 +2,7 @@ package com.zooplus.challenge.currencyconverter.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,17 +16,24 @@ import com.zooplus.challenge.currencyconverter.entity.Exchange;
 @SpringBootTest
 public class CurrencyConverterServiceTest {
 
+	private static final String EUR = "EUR";
+	private static final String USD = "USD";
+	
 	@Autowired
 	CurrencyConverterService currencyConverterService;
 	
 	@Test
 	public void testGetConversionRate() {
-		String fromCurrency = "USD";
-		String toCurrency = "EUR";
-		Exchange exchange = currencyConverterService.getConversionRate(fromCurrency, toCurrency);
+		Exchange exchange = currencyConverterService.getConversionRate(USD, EUR);
 		assertNotNull(exchange);
-		assertEquals(fromCurrency, exchange.getFrom());
+		assertEquals(USD, exchange.getFrom());
 		assertNotNull(exchange.getDate());
+		
+	}
+	
+	@Test
+	public void testGetSupportedCurrencies() {
+		assertTrue(currencyConverterService.getSupportedCurrencies().contains(USD));
 		
 	}
 
