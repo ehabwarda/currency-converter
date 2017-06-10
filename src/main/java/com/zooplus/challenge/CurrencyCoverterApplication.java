@@ -5,12 +5,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 
 import com.zooplus.challenge.currencyconverter.entity.User;
 import com.zooplus.challenge.currencyconverter.service.UserService;
 
 @SpringBootApplication
 @EnableCaching
+@EnableCircuitBreaker
 public class CurrencyCoverterApplication implements CommandLineRunner{
 	
 	
