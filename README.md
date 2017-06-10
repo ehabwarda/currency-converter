@@ -1,8 +1,10 @@
-# Currency Converter
-web based currency converter based on openexchangerates public api: https://openexchangerates.org
-you can use this application to get latest currency conversion rates or at specific dates.
+# Description
+- web based currency converter based on openexchangerates public api: https://openexchangerates.org
+- you can use this application to get latest currency conversion rates or at specific dates.
 
 # Technologies
+- Java 8
+- H2 (in memory database)
 - Spring Boot
 - Spring MVC
 - Thymeleaf
@@ -11,7 +13,6 @@ you can use this application to get latest currency conversion rates or at speci
 - Spring Cache
 - Spring Test (MockMVC and web integration)
 - Spring Cloud Hystrix (circuit breaker implementation)
-- H2 (in memory database)
 
 # Features
 - login/registration/logout
@@ -21,7 +22,10 @@ you can use this application to get latest currency conversion rates or at speci
 - supports caching for historical exchanges, no need to call external service every time for same request.
 - cache TTL and TTI are configurable
 - list of supported countries are configurable
-- list of supported currencies are retrieved from openexchangerates service and cached (configurable TTL). I used hystrix here to get the list from configuration (default list) if failed to connect to external service or if time out, especially this service takes time.
+- form validation messages are configurable
+- list of supported currencies are retrieved from openexchangerates service and cached (configurable TTL). I used hystrix here to get the list from configuration (default list) if failed to connect to external service or if time out.
+- all openexchangerates endpoints and app_id are configurable.
+- monitoring and management interfaces (JMX, REST) are provided through actuator. for simplicity, I provided ACTUATOR role to all users so that they can access actuator's endpoints and metrics, for example: /metrics and /trace. Meanwhile, actuator can be extended to add custom metrics if needed.
 
 # Build and Run
 Application is based on spring boot which means it is autonomous and self contained as it contains all required dependencies and configurations.
@@ -46,4 +50,4 @@ then from your favorite browser, navigate to following url and test the applicat
 - for testing, I created a user while startup >> email: test@gmail.com	password: password
 
 # Restrictions
-- always use USD as from currency because of limitations on openexchangerates free account.
+- always use USD as from currency because of limitations on openexchangerates free account. because of that, I made USD is the only available currency in from currency list.
