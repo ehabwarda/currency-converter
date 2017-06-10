@@ -1,22 +1,27 @@
-# currency-converter
-web based currency converter based on openexchangerates public api
-https://openexchangerates.org
+# Currency Converter
+web based currency converter based on openexchangerates public api: https://openexchangerates.org
+you can use this application to get latest currency conversion rates or at specific dates.
 
-# Technology stack
+# Technologies
 - Spring Boot
 - Spring MVC
 - Thymeleaf
 - Spring Security
 - Spring Data JPA
 - Spring Cache
-- Spring Test (MockMVC)
+- Spring Test (MockMVC and web integration)
+- Spring Cloud Hystrix (circuit breaker implementation)
 - H2 (in memory database)
 
 # Features
 - login/registration/logout
-- main screen to query historical or current exchange rates (as live is not supported for free accounts I use latest instead of live)
+- secured login using spring security (database authentication)
+- Passwords are encoded in DB
+- main screen to query historical or latest available exchange rates.
 - supports caching for historical exchanges, no need to call external service every time for same request.
+- cache TTL and TTI are configurable
 - list of supported countries are configurable
+- list of supported currencies are retrieved from openexchangerates service and cached (configurable TTL). I used hystrix here to get the list from configuration (default list) if failed to connect to external service or if time out, especially this service takes time.
 
 # Build and Run
 Application is based on spring boot which means it is autonomous and self contained as it contains all required dependencies and configurations.
@@ -34,3 +39,11 @@ or
 
 then from your favorite browser, navigate to following url and test the application:
 - http://localhost:9090/
+
+# Notes
+- it depends on the openexchangerates account to allow all operations or not. here, as we use a free account, only from currency supported is USD. the openexchangerates app_id is configurable and if updated to paid account, all operations will be available.
+- it is one main page for both latest and historical queries, if date not provided it will be considered as a request for latest exchange.
+- for testing, I created a user while startup >> email: test@gmail.com	password: password
+
+# Restrictions
+- always use USD as from currency because of limitations on openexchangerates free account.
