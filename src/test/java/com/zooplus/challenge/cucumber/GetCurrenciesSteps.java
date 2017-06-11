@@ -13,7 +13,7 @@ import com.zooplus.challenge.currencyconverter.service.CurrencyConverterService;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
-@SpringBootTest(classes = CurrencyCoverterApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = CurrencyCoverterApplication.class)
 @ContextConfiguration
 public class GetCurrenciesSteps {
 
