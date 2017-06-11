@@ -12,6 +12,7 @@
 - Spring Data JPA
 - Spring Cache
 - Spring Test (MockMVC and web integration)
+- Cucumber
 - Spring Cloud Hystrix (circuit breaker implementation)
 
 # Features
@@ -56,5 +57,5 @@ https://travis-ci.org/ehabwarda/currency-converter
 - always use USD as from currency because of limitations on openexchangerates free account. because of that, I made USD is the only available currency in from currency list.
 
 # Heroku
-- application is available via internet on Heroku: https://ehab-currency-converter.herokuapp.com/main
+- application is available via internet on Heroku: https://ehab-currency-converter.herokuapp.com
 - there is a user already created for test: ehab.ward@gmail.com/password
